@@ -9,7 +9,7 @@ export default function Home() {
 					<h1 className="text-4xl lg:text-6xl text-blue-700"> Comunidad,</h1>
 				</div>
 				<h1 className="text-4xl lg:text-6xl">
-					tus productos.
+					tus products.
 				</h1>
 				<br />
 

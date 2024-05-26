@@ -8,7 +8,9 @@ async function Sellers() {
 
 
   return (
-    <div>
+
+    
+    <>
       <form
         action={async () => {
           'use server';
@@ -21,11 +23,10 @@ async function Sellers() {
       </form>
       <h1>Welcome</h1>
       <p>
-        This is a seller page. You can view the products and add them to your
-        cart.
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure sit eos iste corporis repudiandae. Quas architecto non commodi quisquam facilis nobis laudantium, fugiat delectus reprehenderit nesciunt voluptate quod tempora culpa.
       </p>
       <p>{session?.user?.email}</p>
-    </div>
+    </>
   )
 }
 

@@ -1,5 +1,5 @@
 export const ROOT = '/';
-export const PUBLIC_ROUTES = ['/'];
+export const PUBLIC_ROUTES = ['/','/register'];
 export const AUTH_ROUTES = ['/login'];
 export const DEFAULT_REDIRECT = '/buyers';
 export const BUYER_ROUTES = ['/buyers'];

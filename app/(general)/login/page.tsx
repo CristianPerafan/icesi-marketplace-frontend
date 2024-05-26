@@ -3,6 +3,8 @@ import React from 'react'
 import { Input } from '@nextui-org/input'
 import { login } from '@/actions'
 import { Button } from '@nextui-org/button'
+import Link from 'next/link'
+import { PublicRoutes } from '@/config/routes'
 
 
 
@@ -50,7 +52,7 @@ function SignIn() {
 
 
             <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-              No tienes cuenta? <a href="#" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Registrarse</a>
+              No tienes cuenta? <Link href={PublicRoutes.REGISTER} className="font-medium text-primary-600 hover:underline dark:text-primary-500">Registrarse</Link>
             </p>
           </div>
 

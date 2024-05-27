@@ -2,6 +2,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { NextAuthConfig } from "next-auth";
 import axios from "axios";
 import { getUserById } from "./data/user";
+import { access } from "fs";
 
 
 export default {
@@ -30,7 +31,7 @@ export default {
         
 
         if(!user) return null;
-
+        
         return user;
       },
     }),
@@ -38,18 +39,24 @@ export default {
   callbacks: {
     async session({ session, token }) {
       if (token.sub && session.user) {
+        /*
         session.user.id = token.sub;
         session.user.roles = token.roles;
+        */
+       session.user = token as any;
       }
 
       return session;
     },
-    async jwt({ token }) {
+    async jwt({token ,user}) {
+
+      /*
       if (!token.sub) return token;
       const user = await getUserById(token.sub);
       if (!user) return token;
       token.roles = user.roles;
-      return token;
+      */
+      return { ...token, ...user };
     },
   },
   jwt: { maxAge: 365 * 24 * 60 * 60 },

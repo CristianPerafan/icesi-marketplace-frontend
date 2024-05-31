@@ -10,3 +10,10 @@ const SellerRoute = '/sellers';
 export const SellerRoutes = {
     PRODUCTS: `${SellerRoute}/products`,
 }
+
+const AdminRoute = '/admin';
+
+export const AdminRoutes = {
+    USERS: `${AdminRoute}/users`,
+    PRODUCTS: `${AdminRoute}/products`,
+}

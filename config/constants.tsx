@@ -1,6 +1,7 @@
 import { Icon } from "@iconify/react"
 import { SideNavItem } from "./types";
-import { SellerRoutes } from "./routes";
+import { AdminRoutes, SellerRoutes } from "./routes";
+import { ADMIN_ROUTES } from "@/routes";
 
 
 
@@ -25,5 +26,44 @@ export const SIDENAV_ITEMS: SideNavItem[] = [
             }
         ]
         
+    }
+]
+
+export const SIDENAV_ITEMS_ADMIN: SideNavItem[] = [
+    {
+        title: 'Inicio',
+        path: '/',
+        icon: <Icon icon="lucide:home" width="24" height="24"/>,
+    },{
+        title: 'Productos',
+        path: SellerRoutes.PRODUCTS,
+        icon: <Icon icon="lucide:box" width="24" height="24"/>,
+        submenu: true,
+        subMenuItems: [
+            {
+                title: 'Listar',
+                path:  SellerRoutes.PRODUCTS,
+            },
+            {
+                title: 'Agregar',
+                path: '/productos/agregar',
+            }
+        ]
+        
+    },{
+        title: 'Usuarios',
+        path: SellerRoutes.PRODUCTS,
+        icon: <Icon icon="lucide:user" width="24" height="24"/>,
+        submenu: true,
+        subMenuItems: [
+            {
+                title: 'Listar',
+                path:  AdminRoutes.USERS,
+            },
+            {
+                title: 'Agregar',
+                path: '/users/agregar',
+            }
+        ]
     }
 ]

@@ -8,6 +8,7 @@ import { PublicRoutes } from '@/config/routes'
 import { useRouter } from 'next/navigation'
 import axios from 'axios';
 
+
 function Register() {
     const router = useRouter();
     const [user, setUser] = useState({
@@ -15,19 +16,24 @@ function Register() {
         password: "",
         name: "",
         lastName: "",
-        roles: ["buyer"], // Default role
+        role: "buyer", // Default role
     });
     const [confirmPassword, setConfirmPassword] = useState("");
     const [buttonDisabled, setButtonDisabled] = useState(true);
     const [passwordError, setPasswordError] = useState("");
     const [registerError, setRegisterError] = useState("");
-    const url = `${process.env.BACKEND_URL}/user`;
+    const url = `${process.env.BACKEND_URL}`;
 
     const onSignup = async () => {
         try {
             console.log(url)
-            const response = await axios.post(url, user);
-            console.log("Signup success", response.data);
+            if(user.role === "seller"){
+                const response = await axios.post(url+"/user/seller", user);
+                console.log("Signup success", response.data);
+            }else{
+                const response = await axios.post(url+"/user/buyer", user);
+                console.log("Signup success", response.data);
+            }  
             router.push(PublicRoutes.LOGIN);
         } catch (error: any) {
             console.log("Signup failed", error.message);
@@ -47,7 +53,7 @@ function Register() {
     }, [user, confirmPassword]);
 
     return (
-        <section className="bg-gray-50 dark:bg-gray-900 min-h-screen flex items-center justify-center">
+        <section className="classbg-gray-50 dark:bg-gray-900">
             <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
                 <a href="#" className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
                     <Logo />
@@ -124,8 +130,8 @@ function Register() {
                                     id="role"
                                     name="role"
                                     className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                    value={user.roles}
-                                    onChange={(e) => setUser({ ...user, roles: [e.target.value] })}
+                                    value={user.role}
+                                    onChange={(e) => setUser({ ...user, role: e.target.value })}
                                 >
                                     <option value="buyer">Comprador</option>
                                     <option value="seller">Vendedor</option>

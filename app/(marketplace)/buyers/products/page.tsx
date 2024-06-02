@@ -23,7 +23,7 @@ function Buyers() {
     getBuyersProducts().then((data) => {
       const updatedProducts = data.map(product => ({
         ...product,
-        img: categoryImages[product.category.toLowerCase()] || categoryImages['other']
+        img: product.image || categoryImages[product.category.toLowerCase()] || categoryImages['other']
       }));
       setProducts(updatedProducts);
     }).catch(error => {

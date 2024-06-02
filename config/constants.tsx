@@ -36,18 +36,14 @@ export const SIDENAV_ITEMS_ADMIN: SideNavItem[] = [
         icon: <Icon icon="lucide:home" width="24" height="24"/>,
     },{
         title: 'Productos',
-        path: SellerRoutes.PRODUCTS,
+        path: AdminRoutes.PRODUCTS,
         icon: <Icon icon="lucide:box" width="24" height="24"/>,
         submenu: true,
         subMenuItems: [
             {
                 title: 'Listar',
-                path:  SellerRoutes.PRODUCTS,
+                path:  AdminRoutes.PRODUCTS,
             },
-            {
-                title: 'Agregar',
-                path: '/productos/agregar',
-            }
         ]
         
     },{
@@ -62,7 +58,7 @@ export const SIDENAV_ITEMS_ADMIN: SideNavItem[] = [
             },
             {
                 title: 'Agregar',
-                path: '/users/agregar',
+                path: AdminRoutes.ADD_USER,
             }
         ]
     }

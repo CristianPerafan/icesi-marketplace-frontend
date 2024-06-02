@@ -1,10 +1,11 @@
 "use client"
 import React, { useEffect, useState } from 'react';
 import { getAllUsers } from '@/services/admin';
-import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell } from "@nextui-org/react";
+import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, Tooltip, Button, Link } from "@nextui-org/react";
 import { UserEntity } from '@/model/user.entity';
 import { useRouter } from 'next/navigation';
 import '../../../../styles/globals.css';
+import { AdminRoutes } from '@/config/routes';
 
 function AdminUsers() {
     const [users, setUsers] = useState<UserEntity[]>([]);
@@ -22,6 +23,18 @@ function AdminUsers() {
     };
 
     return (
+        <>
+        <div className='flex justify-between items-center mb-4 text-lg text-gray-800'>
+            <h1 className='text-3xl font-bold mb-4'>Usuarios registrados</h1>
+                <Tooltip content="Agregar">
+                    <Link href={`${AdminRoutes.USERS+"/add"}`}>
+                        <Button className='text-white' size='md' color="primary">
+                            Agregar
+                        </Button>
+                    </Link>
+
+                </Tooltip>
+        </div>
         <Table aria-label="Example static collection table">
             <TableHeader>
                 <TableColumn>Nombre</TableColumn>
@@ -38,6 +51,7 @@ function AdminUsers() {
                 ))}
             </TableBody>
         </Table>
+        </>
     );
 }
 

@@ -1,6 +1,7 @@
 import BackendClient from '@/config/axios-client';
+import { OrderEntity } from '@/model/order.entity';
 import { ProductEntity } from '@/model/product.entity';
-import { UserEntity } from '@/model/user.entity';
+import { CreateUserEntity, UserEntity } from '@/model/user.entity';
 
 const client = BackendClient();
 
@@ -18,3 +19,54 @@ export const getUserById = async (id: string): Promise<UserEntity> => {
     const response = await client.get(`/user/${id}`);
     return response.data;
 };
+
+export const addUser = async (user: CreateUserEntity) => {
+  return await client.post<UserEntity>('user',  user)
+    .then((response) => {
+      return response;
+    })
+    .catch((error) => {
+      return error;
+    });
+}
+
+export const updateUser = async (user: UserEntity) => {
+  return await client.patch<UserEntity>(`user/${user.id}`, user)
+    .then((response) => {
+      return response;
+    })
+    .catch((error) => {
+      return error;
+    });
+}
+
+export const addProduct = async (userId: string, product: ProductEntity) => {
+
+  return await client.post<ProductEntity>('products', { ...product, sellerId: userId})
+    .then((response) => {
+      return response;
+    })
+    .catch((error) => {
+      return error;
+    });
+}
+
+export const getSellersProducts = async (sellerId: string) => {
+  return await client.get<ProductEntity[]>(`products/user/${sellerId}`)
+    .then((response) => {
+      return response;
+    })
+    .catch((error) => {
+      return error;
+    });
+}
+
+export const getOrdersByBuyer = async (buyerId: string) => {
+  return await client.get<OrderEntity[]>(`order/user/${buyerId}`)
+    .then((response) => {
+      return response;
+    })
+    .catch((error) => {
+      return error;
+    });
+}

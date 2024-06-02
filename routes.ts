@@ -1,3 +1,4 @@
+
 export const ROOT = '/';
 export const PUBLIC_ROUTES = ['/','/register'];
 export const AUTH_ROUTES = ['/login'];

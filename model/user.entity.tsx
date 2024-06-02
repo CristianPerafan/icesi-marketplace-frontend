@@ -14,3 +14,18 @@ export interface UserEntity {
     ratings: RatingEntity[];
     ratingsGiven: RatingEntity[];
 }
+
+export interface CreateUserEntity {
+    email: string;
+    name: string;
+    lastName: string;
+    roles: string[];
+    password: string;
+}
+
+
+export const userRoles = [
+    'buyer',
+    'seller',
+    'admin'
+]

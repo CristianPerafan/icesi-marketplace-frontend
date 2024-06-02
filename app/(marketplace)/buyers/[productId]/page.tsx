@@ -2,10 +2,8 @@
 import { useParams } from 'next/navigation';
 import { getProductById } from '@/services/buyers';
 import React, { useEffect, useState } from 'react';
-import Link from 'next/link';
 import { ProductEntity } from '@/model/product.entity';
-import { BASE_BUYER_ROUTE } from '@/config/routes';
-import { Button } from '@nextui-org/button';
+import { Card, CardBody, CardFooter, Image } from '@nextui-org/react';
 
 function ProductDetail() {
   const params = useParams();
@@ -23,34 +21,39 @@ function ProductDetail() {
     }
   }, [params.productId]);
 
+  const handleButtonClick = () => {
+    // Handle button click action here
+  };
+
   if (!product) {
     return <div>Loading...</div>;
   }
 
   return (
-    
-    <div className="flex flex-col">
-      
-      <Link href={`${BASE_BUYER_ROUTE}`}>
-        <Button className='text-white' size='md' color="primary" >
-          Listar productos
-        </Button>
-      </Link>
-      <div className="flex justify-center p-4">
-        <div>
-          <img
-            alt={product.name}
-            className="w-full object-cover"
-            style={{ height: '400px', maxWidth: '600px' }}
-            src={product.image}
-          />
-          <div className="mt-4">
-            <h1 className="text-2xl font-bold">{product.name}</h1>
-            <p className="text-lg">{`Precio: $${product.price.toLocaleString()} COP`}</p>
+    <div className="flex justify-center items-center" style={{ height: '100vh' }}>
+      <div onClick={handleButtonClick}>
+        <Card shadow="sm" className="custom-card">
+          <CardBody className="overflow-visible p-0">
+            <Image
+              shadow="sm"
+              radius="lg"
+              width="100%"
+              alt={product.name}
+              className="w-full object-cover"
+              style={{ height: '400px' }}
+              src={product.image}
+            />
+          </CardBody>
+          <CardFooter className="p-4 flex flex-col items-start"> 
+            <b className="mb-2">{product.name}</b> 
+            <p className="text-default-500">{`Precio: $${product.price.toLocaleString()} COP`}</p>
             <p>{product.description}</p>
-            <button className='mt-4 bg-blue-500 text-white py-2 px-4 rounded-lg'>Comprar</button>
-          </div>
-        </div>
+            <div className="flex justify-between">
+              <button className='mt-4 bg-blue-400 hover:bg-blue-500 text-white py-2 px-4 rounded-lg transition-colors duration-300'style={{ marginRight: '8px' }}>Comprar</button>
+              <button className='mt-4 bg-blue-400 hover:bg-blue-500 text-white py-2 px-4 rounded-lg transition-colors duration-300 '>Añadir al carrito</button>
+            </div>
+          </CardFooter>
+        </Card>
       </div>
     </div>
   );

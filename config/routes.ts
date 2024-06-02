@@ -21,6 +21,8 @@ export const AdminRoutes = {
     ADD_USER: `${BASE_ADMIN_ROUTE}/users/add`,
     PRODUCTS: `${BASE_ADMIN_ROUTE}/products`,
     EDIT_PRODUCT: `${BASE_ADMIN_ROUTE}/products/:productId`,
+    READ_ORDER: `${BASE_ADMIN_ROUTE}/orders/:orderId`,
+    ORDERS: `${BASE_ADMIN_ROUTE}/orders`,
 }
 
 

@@ -61,8 +61,110 @@ export const getSellersProducts = async (sellerId: string) => {
     });
 }
 
+export const getAllProducts = async () => {
+  return await client.get<ProductEntity[]>(`/products`)
+    .then((response) => {
+      return response;
+    })
+    .catch((error) => {
+      return error;
+    });
+}
+
 export const getOrdersByBuyer = async (buyerId: string) => {
   return await client.get<OrderEntity[]>(`order/user/${buyerId}`)
+    .then((response) => {
+      return response;
+    })
+    .catch((error) => {
+      return error;
+    });
+}
+
+
+export const getOrderById = async (id: string) => {
+  return await client.get<OrderEntity[]>(`order/${id}`)
+    .then((response) => {
+      return response;
+    })
+    .catch((error) => {
+      return error;
+    });
+}
+
+export const getOrdersBySeller = async (sellerId: string) => {
+  return await client.get<OrderEntity[]>(`order/seller/${sellerId}`)
+    .then((response) => {
+      return response;
+    })
+    .catch((error) => {
+      return error;
+    });
+}
+
+
+export const getOrdersAll = async () => {
+  return await client.get<OrderEntity[]>(`order`)
+    .then((response) => {
+      return response;
+    })
+    .catch((error) => {
+      return error;
+    });
+}
+
+export const deleteOrderItem = async (id: string) => {
+  return await client.delete<OrderEntity[]>(`order/item/${id}`)
+    .then((response) => {
+      return response;
+    })
+    .catch((error) => {
+      return error;
+    });
+}
+
+export const getRatingsReceived = async (id: string) => {
+  return await client.get<OrderEntity[]>(`rating/seller/${id}`)
+    .then((response) => {
+      return response;
+    })
+    .catch((error) => {
+      return error;
+    });
+}
+
+export const getRatingsGiven = async (id: string) => {
+  return await client.get<OrderEntity[]>(`rating/author/${id}`)
+    .then((response) => {
+      return response;
+    })
+    .catch((error) => {
+      return error;
+    });
+}
+
+export const removeOrder = async (orderId: string) => {
+  return await client.delete(`order/${orderId}`)
+    .then((response) => {
+      return response;
+    })
+    .catch((error) => {
+      return error;
+    });
+}
+
+export const removeRating = async (ratingId: string) => {
+  return await client.delete(`rating/${ratingId}`)
+    .then((response) => {
+      return response;
+    })
+    .catch((error) => {
+      return error;
+    });
+}
+
+export const acceptOrder = async (orderId: string) => {
+  return await client.patch(`order/accept/${orderId}`)
     .then((response) => {
       return response;
     })

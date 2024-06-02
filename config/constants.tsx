@@ -48,7 +48,7 @@ export const SIDENAV_ITEMS_ADMIN: SideNavItem[] = [
         
     },{
         title: 'Usuarios',
-        path: SellerRoutes.PRODUCTS,
+        path: AdminRoutes.USERS,
         icon: <Icon icon="lucide:user" width="24" height="24"/>,
         submenu: true,
         subMenuItems: [
@@ -61,5 +61,10 @@ export const SIDENAV_ITEMS_ADMIN: SideNavItem[] = [
                 path: AdminRoutes.ADD_USER,
             }
         ]
+    },{
+        title: "Órdenes",
+        path: AdminRoutes.ORDERS,
+        icon: <Icon icon="lucide:shopping-cart" width="24" height="24"/>,
     }
+
 ]

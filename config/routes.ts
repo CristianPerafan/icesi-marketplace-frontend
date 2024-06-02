@@ -6,6 +6,7 @@ export const PublicRoutes = {
 }
 
 export const BASE_SELLER_ROUTE = '/sellers';
+export const BASE_BUYER_ROUTE = '/buyers';
 
 export const SellerRoutes = {
     BASE : BASE_SELLER_ROUTE,
@@ -23,6 +24,12 @@ export const AdminRoutes = {
     EDIT_PRODUCT: `${BASE_ADMIN_ROUTE}/products/:productId`,
     READ_ORDER: `${BASE_ADMIN_ROUTE}/orders/:orderId`,
     ORDERS: `${BASE_ADMIN_ROUTE}/orders`,
+}
+
+export const BuyerRoutes = {
+    BASE : BASE_BUYER_ROUTE,
+    PRODUCTS: `${BASE_BUYER_ROUTE}/products`,
+    DETAIL_PRODUCT: `${BASE_BUYER_ROUTE}/:productId`,
 }
 
 

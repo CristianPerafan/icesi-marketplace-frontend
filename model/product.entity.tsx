@@ -1,3 +1,5 @@
+import { UserEntity } from "./user.entity";
+
 export interface ProductEntity {
     id : string;
     name : string;
@@ -6,6 +8,7 @@ export interface ProductEntity {
     price : number;
     image : string;
     sellerId : string;
+    user : UserEntity;
 }
 
 

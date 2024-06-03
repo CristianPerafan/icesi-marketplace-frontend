@@ -1,48 +1,74 @@
-import { auth, signOut } from '@/auth';
-import { Button } from '@nextui-org/button';
-import React from 'react';
-import NextLink from 'next/link'; // Importar NextLink
-import { Logo } from '@/components/icons';
+"use client";
+import React, { useEffect, useState } from 'react';
+import { getBuyersProducts } from '@/services/buyers';
+import { ProductEntity } from "@/model/product.entity";
+import { Button, Card, CardBody, CardFooter, Image, Tooltip } from "@nextui-org/react";
+import Link from 'next/link';
+import { Icon } from '@iconify/react';
 
-async function Buyers() {
-  const session = await auth();
+// Mapeo de categorías a imágenes
+const categoryImages: Record<string, string> = {
+  'food': "https://i.ibb.co/s9pSR5y/Food.jpg",
+  'drink': "https://i.ibb.co/3F0tWMT/Drink.jpg",
+  'books': "https://i.ibb.co/XJrh38d/Books.jpg",
+  'electronics': "https://i.ibb.co/PrnNZjX/Electronic.jpg",
+  'fashion': "https://i.ibb.co/gMd7SdG/Fashion.jpg",
+  'sports': "https://i.ibb.co/m0t9jVf/Sports.jpg",
+  'other': "https://i.ibb.co/K7J6Bzr/Other.jpg",
+};
+
+function Buyers() {
+
+
+  const [products, setProducts] = useState<ProductEntity[]>([]);
+
+  useEffect(() => {
+    getBuyersProducts().then((data) => {
+      const updatedProducts = data.map((product: ProductEntity) => ({
+        ...product,
+        img: product.image || categoryImages[product.category.toLowerCase()] || categoryImages['other']
+      }));
+      setProducts(updatedProducts);
+    }).catch(error => {
+      console.error("Error fetching products:", error);
+    });
+  }, []);
 
   return (
-    <div>
-      <div className="flex justify-between items-center bg-white p-4">
-        <div className="flex items-center gap-16"> 
-          <NextLink className="flex justify-start items-center gap-1" href="/">
-            <Logo />
-            <p className="text-lg font-bold text-inherit">Icesi Marketplace</p>
-          </NextLink>
-          <NextLink href="/buyers" style={{ marginRight: '20px' }}> 
-            <p className="text-lg text-gray-500 font-bold">Listar productos</p>
-          </NextLink>
-        </div>
-        <div className="flex items-center space-x-4 flex-grow relative">
-          <div className="relative flex-grow"style={{ marginRight: '30px', marginLeft: '30px' }}>
-            <input 
-              type="text" 
-              placeholder="Buscar..." 
-              className="px-2 py-1 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-400 w-full" 
-              style={{ paddingLeft: '20px', marginRight: '50px' }} 
-            />
-            <Button className="absolute top-0 right-0 bg-blue-400 h-full px-4">Buscar</Button>
+    <div className="flex justify-center">
+      <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 p-4">
+        {products.map((product) => (
+          <div key={product.id}>
+            <Link href={`/buyers/product/${product.id}`}>
+              <Card shadow="sm" isPressable className="custom-card">
+                <CardBody className="overflow-visible p-0">
+                  <Image
+                    shadow="sm"
+                    radius="lg"
+                    width="100%"
+                    alt={product.name}
+                    className="w-full object-cover"
+                    style={{ height: '200px', maxWidth: '300px' }}
+                    src={product.image}
+                  />
+                </CardBody>
+                <CardFooter className="p-4 flex flex-col items-center">
+                  <b className="mb-2">{product.name}</b>
+                  <p className="text-default-500">{`$${product.price.toLocaleString()} COP`}</p>
+
+
+                  <div className="flex flex-row items-center gap-2">
+                    <Button isIconOnly size="md" className="mt-2" color='primary' variant='ghost'><Icon icon="lucide:shopping-cart"/></Button>
+                    <Tooltip content="Comprar">
+                      <Button size="md" color='primary' variant='bordered'>Comprar</Button>
+                    </Tooltip>  
+                  </div>
+
+                </CardFooter>
+              </Card>
+            </Link>
           </div>
-          <div className="flex items-center space-x-4 justify-end">
-            <p>{session?.user?.email}</p>
-            <form
-              action={async () => {
-                'use server';
-                await signOut();
-              }}
-            >
-              <Button type='submit' className="bg-blue-400">
-                Log Out
-              </Button>
-            </form>
-          </div>
-        </div>
+        ))}
       </div>
     </div>
   );

@@ -26,6 +26,19 @@ export const SIDENAV_ITEMS: SideNavItem[] = [
             }
         ]
         
+    },{
+        title: 'Ordenes',
+        path: SellerRoutes.ORDERS,
+        icon: <Icon icon="lucide:box" width="24" height="24"/>,
+        submenu: true,
+        subMenuItems: [
+            {
+                title: 'Listar',
+                path:  SellerRoutes.ORDERS,
+            },
+            
+        ]
+        
     }
 ]
 

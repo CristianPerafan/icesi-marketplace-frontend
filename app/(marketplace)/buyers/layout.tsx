@@ -1,17 +1,16 @@
 import React from 'react';
-import dynamic from 'next/dynamic';
-import PageWrapper from '@/components/sidenav/page-wrapper';
+import NavigationbarBuyers from '@/components/buyers/navigationbar.buyers';
+import { signOut } from 'next-auth/react';
 
-const Buyers = dynamic(() => import('./products/page'), { ssr: false });
 
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className='flex flex-col min-h-screen'>
-      
+
+      <NavigationbarBuyers signOut={signOut } />
       <div className='flex-1'>
-        <PageWrapper>{children}</PageWrapper>
-        <Buyers />
+        {children}
       </div>
       
     </div>

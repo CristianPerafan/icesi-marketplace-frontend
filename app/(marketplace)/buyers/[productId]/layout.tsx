@@ -2,6 +2,7 @@ import React from 'react';
 import dynamic from 'next/dynamic';
 import PageWrapper from '@/components/sidenav/page-wrapper';
 
+
 const ProductDetail = dynamic(() => import('../page'), { ssr: false });
 
 

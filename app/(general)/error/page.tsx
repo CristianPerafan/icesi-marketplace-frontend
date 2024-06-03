@@ -1,9 +1,10 @@
 "use client";
 
+import React, { Suspense } from "react";
 import { Button } from "@nextui-org/button";
 import { useSearchParams, useRouter } from "next/navigation";
 
-export default function Page() {
+function ErrorContent() {
   const router = useRouter();
   const errorSearchParams = useSearchParams().get("error");
   let errorMessage = "Auth Error";
@@ -16,5 +17,13 @@ export default function Page() {
         Go back
       </Button>
     </div>
+  );
+}
+
+export default function Page() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <ErrorContent />
+    </Suspense>
   );
 }

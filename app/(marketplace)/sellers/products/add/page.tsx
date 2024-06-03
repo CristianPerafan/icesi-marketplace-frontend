@@ -2,7 +2,7 @@
 import { Input } from '@nextui-org/input'
 import React, { ReactNode } from 'react'
 import { ProductCategories, ProductEntity } from '@/model/product.entity'
-import { Button, Link, Select, SelectItem, useDisclosure ,Textarea} from '@nextui-org/react'
+import { Button, Link, Select, SelectItem, useDisclosure, Textarea } from '@nextui-org/react'
 import { SellerRoutes } from '@/config/routes'
 import { useForm } from 'react-hook-form'
 import { getSession } from "next-auth/react";
@@ -23,10 +23,10 @@ function Page() {
     } = useForm<ProductEntity>();
 
 
-        // Modal
-        const { isOpen, onOpen, onOpenChange } = useDisclosure();
-        const [submitMessage, setSubmitMessage] = React.useState<ReactNode>(null);
-        const [isSubmitted, setIsSubmitted] = React.useState<boolean>(false);
+    // Modal
+    const { isOpen, onOpen, onOpenChange } = useDisclosure();
+    const [submitMessage, setSubmitMessage] = React.useState<ReactNode>(null);
+    const [isSubmitted, setIsSubmitted] = React.useState<boolean>(false);
 
     async function onSubmit(data: ProductEntity) {
         const session = await getSession()
@@ -54,7 +54,7 @@ function Page() {
             }).catch((error) => {
                 setSubmitMessage(<div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded-lg">
                     <p className='text-sm'>Error al agregar el producto.</p></div>)
-                
+
             });
         }
     }
@@ -158,7 +158,7 @@ function Page() {
                         <Link href={`${SellerRoutes.PRODUCTS}`}>
                             <Button className='text-white' size='md' color="danger" >Cerrar</Button>
                         </Link>
-                        <Button className='text-white' size='md' color="primary"   onClick={() => onOpen()}>Guardar</Button>
+                        <Button className='text-white' size='md' color="primary" onClick={() => onOpen()}>Guardar</Button>
                     </div>
 
                 </form>

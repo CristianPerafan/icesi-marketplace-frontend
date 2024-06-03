@@ -8,11 +8,11 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className='flex flex-col min-h-screen'>
 
-      <NavigationbarBuyers signOut={signOut } />
+      <NavigationbarBuyers signOut={signOut} />
       <div className='flex-1'>
         {children}
       </div>
-      
+
     </div>
   );
 }

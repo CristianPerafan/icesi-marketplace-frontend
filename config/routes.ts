@@ -30,6 +30,7 @@ export const BuyerRoutes = {
     BASE : BASE_BUYER_ROUTE,
     PRODUCTS: `${BASE_BUYER_ROUTE}/products`,
     DETAIL_PRODUCT: `${BASE_BUYER_ROUTE}/:productId`,
+    STORE: `${BASE_BUYER_ROUTE}/cart`,
 }
 
 

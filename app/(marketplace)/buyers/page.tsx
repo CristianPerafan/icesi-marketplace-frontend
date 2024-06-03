@@ -2,8 +2,9 @@
 import React, { useEffect, useState } from 'react';
 import { getBuyersProducts } from '@/services/buyers';
 import { ProductEntity } from "@/model/product.entity";
-import { Card, CardBody, CardFooter, Image } from "@nextui-org/react";
-import Link from 'next/link'; 
+import { Button, Card, CardBody, CardFooter, Image, Tooltip } from "@nextui-org/react";
+import Link from 'next/link';
+import { Icon } from '@iconify/react';
 
 // Mapeo de categorías a imágenes
 const categoryImages: Record<string, string> = {
@@ -17,8 +18,8 @@ const categoryImages: Record<string, string> = {
 };
 
 function Buyers() {
-  
-  
+
+
   const [products, setProducts] = useState<ProductEntity[]>([]);
 
   useEffect(() => {
@@ -34,11 +35,11 @@ function Buyers() {
   }, []);
 
   return (
-    <div className="flex justify-center"> 
+    <div className="flex justify-center">
       <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 p-4">
         {products.map((product) => (
           <div key={product.id}>
-            <Link href={`/buyers/${product.id}`}>
+            <Link href={`/buyers/product/${product.id}`}>
               <Card shadow="sm" isPressable className="custom-card">
                 <CardBody className="overflow-visible p-0">
                   <Image
@@ -51,9 +52,18 @@ function Buyers() {
                     src={product.image}
                   />
                 </CardBody>
-                <CardFooter className="p-4 flex flex-col items-start"> 
-                  <b className="mb-2">{product.name}</b> 
+                <CardFooter className="p-4 flex flex-col items-center">
+                  <b className="mb-2">{product.name}</b>
                   <p className="text-default-500">{`$${product.price.toLocaleString()} COP`}</p>
+
+
+                  <div className="flex flex-row items-center gap-2">
+                    <Button isIconOnly size="md" className="mt-2" color='primary' variant='ghost'><Icon icon="lucide:shopping-cart"/></Button>
+                    <Tooltip content="Comprar">
+                      <Button size="md" color='primary' variant='bordered'>Comprar</Button>
+                    </Tooltip>  
+                  </div>
+
                 </CardFooter>
               </Card>
             </Link>

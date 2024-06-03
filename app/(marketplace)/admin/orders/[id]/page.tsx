@@ -162,7 +162,7 @@ function OrderDetail({ params }: Props) {
                         <p><strong>Estado:</strong> {order.accepted ? "Aceptada" : "No ha sido aceptada"}</p>
                         {order.accepted ? "" :
                             <Tooltip color="success" content="Accept order">
-                                <span onClick={() => { acceptOrder(order.id); onOrderModalOpen(); router.refresh() }} className="text-2xl text-success cursor-pointer active:opacity-50">
+                                <span onClick={() => { setOrderToAccept(order.id); onOrderModalOpen(); router.refresh() }} className="text-2xl text-success cursor-pointer active:opacity-50">
                                     <Icon icon="lucide:circle-check" />
                                 </span>
                             </Tooltip>

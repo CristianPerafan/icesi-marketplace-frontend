@@ -1,9 +1,11 @@
 "use client"
 import React, { useEffect, useState } from 'react';
-import { Navbar, NavbarBrand, NavbarContent, Input, Dropdown, DropdownTrigger, Avatar, DropdownMenu, DropdownItem } from '@nextui-org/react';
+import { Navbar, NavbarBrand, NavbarContent, Input, Dropdown, DropdownTrigger, Avatar, DropdownMenu, DropdownItem, Button } from '@nextui-org/react';
 import NextLink from 'next/link';
 import { getSession } from 'next-auth/react';
 import { Logo } from '../icons';
+import { Icon } from '@iconify/react';
+import Link from 'next/link';
 interface Props {
     signOut: () => void;
 }
@@ -42,6 +44,7 @@ const NavigationbarBuyers: React.FC<Props> = ({ signOut }) => {
                         </NextLink>
                     </NavbarBrand>
                 </NavbarContent>
+
                 <NavbarContent className="basis-1/5 sm:basis-full" justify="end">
                     <Input
                         classNames={{
@@ -55,6 +58,15 @@ const NavigationbarBuyers: React.FC<Props> = ({ signOut }) => {
                         startContent={<i data-lucide="search"></i>}
                         type="search"
                     />
+
+                    <Link href="/buyers/cart">
+                        <Button
+                            isIconOnly
+                        >
+                            <Icon icon="lucide:shopping-cart" />
+                        </Button>
+                    </Link>
+
                     <Dropdown placement="bottom-end">
                         <DropdownTrigger>
                             <Avatar

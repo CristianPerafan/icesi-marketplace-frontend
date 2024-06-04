@@ -13,6 +13,9 @@ export const SellerRoutes = {
     PRODUCTS: `${BASE_SELLER_ROUTE}/products`,
     EDIT_PRODUCT: `${BASE_SELLER_ROUTE}/products/:productId`,
     ADD_PRODUCT: `${BASE_SELLER_ROUTE}/products/add`,
+    ORDERS: `${BASE_SELLER_ROUTE}/orders`,
+    ORDER_DETAILS: `${BASE_SELLER_ROUTE}/orders/:orderId`,
+
 }
 
 export const BASE_ADMIN_ROUTE = '/admin';

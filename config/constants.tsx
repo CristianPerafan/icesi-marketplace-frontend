@@ -8,7 +8,7 @@ import { ADMIN_ROUTES } from "@/routes";
 export const SIDENAV_ITEMS: SideNavItem[] = [
     {
         title: 'Inicio',
-        path: '/',
+        path: SellerRoutes.BASE,
         icon: <Icon icon="lucide:home" width="24" height="24"/>,
     },{
         title: 'Productos',
@@ -22,8 +22,21 @@ export const SIDENAV_ITEMS: SideNavItem[] = [
             },
             {
                 title: 'Agregar',
-                path: '/productos/agregar',
+                path: SellerRoutes.ADD_PRODUCT,
             }
+        ]
+        
+    },{
+        title: 'Ordenes',
+        path: SellerRoutes.ORDERS,
+        icon: <Icon icon="lucide:box" width="24" height="24"/>,
+        submenu: true,
+        subMenuItems: [
+            {
+                title: 'Listar',
+                path:  SellerRoutes.ORDERS,
+            },
+            
         ]
         
     }

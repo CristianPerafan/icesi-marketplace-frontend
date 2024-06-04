@@ -5,6 +5,7 @@ import React from 'react'
 import Header from '@/components/sidenav/header';
 import HeaderMobile from '@/components/sidenav/header-mobile';
 import PageWrapper from '@/components/sidenav/page-wrapper';
+import { signOut } from 'next-auth/react';
 
 
 const inter = Inter({ subsets: ['latin'] });
@@ -20,7 +21,7 @@ export default function Layout(
       <SideNav />
       <div className='flex-1'>
         <MarginWidthWrapper>
-          <Header />
+          <Header signOut={signOut}/>
           <HeaderMobile />
           <PageWrapper>{children}</PageWrapper>
         </MarginWidthWrapper>

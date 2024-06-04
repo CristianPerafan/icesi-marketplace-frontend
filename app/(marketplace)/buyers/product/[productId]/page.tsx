@@ -6,7 +6,6 @@ import { ProductEntity } from '@/model/product.entity';
 import { Link } from '@nextui-org/link';
 import { Button, Card, CardBody, CardFooter, Image, Tooltip } from '@nextui-org/react';
 import { Icon } from '@iconify/react';
-import { useDispatch } from 'react-redux';
 import {  useCartStore } from "@/app/providers";
 
 
@@ -14,7 +13,6 @@ function ProductDetail() {
     const params = useParams();
     const [product, setProduct] = useState<ProductEntity | null>(null);
     const [relatedProducts, setRelatedProducts] = useState<ProductEntity[]>([]);
-    const dispatch = useDispatch();
 
     const { addItem } = useCartStore(state=>state);
 

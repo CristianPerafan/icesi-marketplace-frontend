@@ -6,6 +6,7 @@ import { getSession } from 'next-auth/react';
 import { Logo } from '../icons';
 import { Icon } from '@iconify/react';
 import Link from 'next/link';
+import { user } from '@nextui-org/theme';
 interface Props {
     signOut: () => void;
 }
@@ -14,11 +15,14 @@ const NavigationbarBuyers: React.FC<Props> = ({ signOut }) => {
     const [session, setSession] = useState<any>(null);
     const [loading, setLoading] = useState(true);
 
+    
+
     useEffect(() => {
         const fetchSession = async () => {
             try {
                 const sessionData = await getSession();
                 setSession(sessionData);
+                console.log(sessionData?.user.roles);
             } catch (error) {
                 console.error('Error fetching session:', error);
             } finally {
@@ -32,6 +36,8 @@ const NavigationbarBuyers: React.FC<Props> = ({ signOut }) => {
     if (loading) {
         return <div>Loading...</div>; // You can replace this with a more elaborate loading component if needed
     }
+
+
 
     return (
         <div>
@@ -84,7 +90,15 @@ const NavigationbarBuyers: React.FC<Props> = ({ signOut }) => {
                                 <p className="font-semibold">{`${session?.user.name} ${session?.user.lastName}`}</p>
                             </DropdownItem>
                             <DropdownItem key="settings">Configuración</DropdownItem>
-                            <DropdownItem key="team_settings">Team Settings</DropdownItem>
+                            { 
+                                session?.user.roles.includes('admin') ? <DropdownItem key="admin" href="/admin" startContent={<Icon icon="lucide:database" width="18" height="18"/>}>Administrador</DropdownItem> : 
+                                <DropdownItem key="team_settings">Team Settings</DropdownItem>
+
+                            }{
+                                session?.user.roles.includes('seller') ? <DropdownItem key="seller" href="/sellers" startContent={<Icon icon="lucide:store" width="18" height="18"/>}>Vendedor</DropdownItem> :
+                                <DropdownItem key="team_settings">Team Settings</DropdownItem>
+                            }
+
                             <DropdownItem key="logout" color="danger" onClick={signOut}>
                                 Log Out
                             </DropdownItem>

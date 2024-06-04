@@ -5,8 +5,8 @@ import { ProductEntity } from "@/model/product.entity";
 import { Button, Card, CardBody, CardFooter, Image, Tooltip } from "@nextui-org/react";
 import Link from 'next/link';
 import { Icon } from '@iconify/react';
-import { useDispatch } from 'react-redux';
-import { addToCart } from '@/reducers/cartReducer';
+import {  useCartStore } from "@/app/providers";
+
 
 
 const categoryImages: Record<string, string> = {
@@ -21,8 +21,13 @@ const categoryImages: Record<string, string> = {
 
 function Buyers() {
     const [products, setProducts] = useState<ProductEntity[]>([]);
-    const dispatch = useDispatch();
 
+    const { addItem } = useCartStore(
+        state => state,
+    );
+
+    
+    
     useEffect(() => {
         getBuyersProducts().then((data) => {
             const updatedProducts = data.map((product: ProductEntity) => ({
@@ -35,38 +40,50 @@ function Buyers() {
         });
     }, []);
 
+
+
+
+
     return (
         <div className="flex justify-center">
             <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 p-4">
                 {products.map((product) => (
                     <div key={product.id}>
-                        <Link href={`/buyers/product/${product.id}`}>
-                            <Card shadow="sm" isPressable className="custom-card">
-                                <CardBody className="overflow-visible p-0">
-                                    <Image
-                                        shadow="sm"
-                                        radius="lg"
-                                        width="100%"
-                                        alt={product.name}
-                                        className="w-full object-cover"
-                                        style={{ height: '200px', maxWidth: '300px' }}
-                                        src={product.image}
-                                    />
-                                </CardBody>
-                                <CardFooter className="p-4 flex flex-col items-center">
-                                    <b className="mb-2">{product.name}</b>
-                                    <p className="text-default-500">{`$${product.price.toLocaleString()} COP`}</p>
-                                    <div className="flex flex-row items-center gap-2">
-                                        <Button isIconOnly size="md" className="mt-2" color='primary' variant='ghost' onClick={() => dispatch(addToCart(product))}>
+                        <Card shadow="sm" isPressable className="custom-card">
+                            <CardBody className="overflow-visible p-0">
+                                <Image
+                                    shadow="sm"
+                                    radius="lg"
+                                    width="100%"
+                                    alt={product.name}
+                                    className="w-full object-cover"
+                                    style={{ height: '200px', maxWidth: '300px' }}
+                                    src={product.image}
+                                />
+                            </CardBody>
+                            <CardFooter className="p-4 flex flex-col items-center">
+                                <b className="mb-2">{product.name}</b>
+                                <p className="text-default-500">{`$${product.price.toLocaleString()} COP`}</p>
+                                <div className="flex flex-row items-center gap-2 mt-2">
+
+                                    <Link href={`/buyers/cart`}>
+                                    <Tooltip content="Agregar">
+                                        <Button isIconOnly size="md" color='primary' variant='ghost' onClick={() => addItem({...product,quantity:5})}>
                                             <Icon icon="lucide:shopping-cart" />
                                         </Button>
+                                    </Tooltip>
+                                    </Link>
+
+
+                                    <Link href={`/buyers/product/${product.id}`}>
                                         <Tooltip content="Comprar">
                                             <Button size="md" color='primary' variant='bordered'>Comprar</Button>
                                         </Tooltip>
-                                    </div>
-                                </CardFooter>
-                            </Card>
-                        </Link>
+                                    </Link>
+
+                                </div>
+                            </CardFooter>
+                        </Card>
                     </div>
                 ))}
             </div>

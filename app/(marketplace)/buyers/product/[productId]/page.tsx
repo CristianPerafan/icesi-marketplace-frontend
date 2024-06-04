@@ -7,7 +7,7 @@ import { Link } from '@nextui-org/link';
 import { Button, Card, CardBody, CardFooter, Image, Tooltip } from '@nextui-org/react';
 import { Icon } from '@iconify/react';
 import { useDispatch } from 'react-redux';
-import { addToCart } from '@/reducers/cartReducer';
+import {  useCartStore } from "@/app/providers";
 
 
 function ProductDetail() {
@@ -15,6 +15,8 @@ function ProductDetail() {
     const [product, setProduct] = useState<ProductEntity | null>(null);
     const [relatedProducts, setRelatedProducts] = useState<ProductEntity[]>([]);
     const dispatch = useDispatch();
+
+    const { addItem } = useCartStore(state=>state);
 
     useEffect(() => {
         if (params.productId) {
@@ -66,6 +68,7 @@ function ProductDetail() {
                     <div className="text-left flex flex-col gap-2 w-full">
                         <label className="font-semibold">Quantity</label>
                         <input
+                            id = "quantity"
                             className="border border-gray-300 text-sm font-semibold mb-1 max-w-full w-full outline-none rounded-md m-0 py-3 px-4 md:py-3 md:px-4 md:mb-0 focus:border-blue-500"
                             type="number"
                             defaultValue="1"
@@ -75,7 +78,7 @@ function ProductDetail() {
                             <button
                                 className="flex justify-center items-center gap-2 w-full py-3 px-4 bg-blue-500 text-white text-md font-bold border border-blue-500 rounded-md ease-in-out duration-150 shadow-slate-600 hover:bg-white hover:text-blue-500 lg:m-0 md:px-6"
                                 title="Confirm Order"
-                                onClick={() => dispatch(addToCart(product))}
+                                onClick={() => addItem({...product, quantity: 1})}
                             >
                                 <span>Confirmar orden</span>
                             </button>
@@ -105,7 +108,7 @@ function ProductDetail() {
                                         <b className="mb-2">{relatedProduct.name}</b>
                                         <p className="text-default-500">{`$${relatedProduct.price.toLocaleString()} COP`}</p>
                                         <div className="flex flex-row items-center gap-2">
-                                            <Button isIconOnly size="md" className="mt-2" color='primary' variant='ghost' onClick={() => dispatch(addToCart(relatedProduct))}>
+                                            <Button isIconOnly size="md" className="mt-2" color='primary' variant='ghost' onClick={() => addItem({...product, quantity: 1})}>
                                                 <Icon icon="lucide:shopping-cart" />
                                             </Button>
                                             <Tooltip content="Comprar">

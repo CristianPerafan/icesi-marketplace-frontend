@@ -135,11 +135,14 @@ function UserDetail({ params }: Props) {
                                                 <Icon icon="eva:trash-2-outline" />
                                             </span>
                                         </Tooltip>
+                                        {
+                                            order.accepted ? "" :
                                         <Tooltip color="success" content="Accept Order">
                                             <span onClick={() => { setOrderToAccept(order.id); onOrderModalOpen(); }} className="text-lg text-success cursor-pointer active:opacity-50">
                                                 <Icon icon="lucide:circle-check" />
                                             </span>
                                         </Tooltip>
+                                        }
                                     </div>
                                 </TableCell>
                             </TableRow>

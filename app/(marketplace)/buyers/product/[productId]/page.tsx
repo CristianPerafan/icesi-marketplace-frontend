@@ -1,12 +1,13 @@
 "use client";
 import { useParams } from 'next/navigation';
-import { getProductById, getProductsByCategory } from '@/services/buyers';
-import React, { useEffect, useState } from 'react';
+import { createOrder, getProductById, getProductsByCategory } from '@/services/buyers';
+import React, { ReactNode, useEffect, useState } from 'react';
 import { ProductEntity } from '@/model/product.entity';
 import { Link } from '@nextui-org/link';
-import { Button, Card, CardBody, CardFooter, Image, Tooltip } from '@nextui-org/react';
+import { Button, Card, CardBody, CardFooter, Image, Tooltip, useDisclosure } from '@nextui-org/react';
 import { Icon } from '@iconify/react';
 import {  useCartStore } from "@/app/providers";
+import ConfirmModal from '@/components/modal';
 
 
 function ProductDetail() {
@@ -41,11 +42,50 @@ function ProductDetail() {
         }
     }, [product]);
 
+    const { isOpen: isProductModalOpen, onOpen: onProductModalOpen, onOpenChange: onProductModalOpenChange } = useDisclosure();
+    const [ProductSubmitMessage, setProductSubmitMessage] = React.useState<ReactNode>(null);
+    const [isProductSubmitted, setIsProductSubmitted] = React.useState<boolean>(false);
+    const [productToBuy, setProductToBuy] = React.useState<string>('');
+    const [amountToBuy, setAmountToBuy] = React.useState<number>(1);
+
+    const submitOrderHandler = async () => {
+        if(product){        
+            createOrder(productToBuy,amountToBuy, product?.sellerId).then((response) => {
+                setProductSubmitMessage(<div className="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded-lg">
+                    <p className='text-sm'>Orden agregada correctamente.</p></div>)
+
+                const timer = setTimeout(() => {
+                    onProductModalOpenChange();
+                    setProductSubmitMessage(null);
+                    setIsProductSubmitted(false);
+                    
+                }, 2000);
+
+            }).catch((error) => {
+                setProductSubmitMessage(<div className="bg-red-100 border-l-4 border-red-500 text-red-700 p-4 rounded-lg">
+                    <p className='text-sm'>Error al agregar la orden.</p></div>)
+            });
+        }
+    }
+
+
     if (!product) {
         return <div>Loading...</div>;
     }
 
     return (
+        <>
+            <ConfirmModal
+                isOpen={isProductModalOpen}
+                onOpen={onProductModalOpen}
+                onOpenChange={onProductModalOpenChange}
+                title='Confirmar'
+                message='¿Estás seguro de que deseas ordenar este elemento?'
+                onSubmit={submitOrderHandler}
+                submitMessage={ProductSubmitMessage}
+                isSubmitted={isProductSubmitted}
+            />
+
         <div>
             <div className="flex flex-row p-6 gap-4 max-w-7xl m-auto">
                 <div>
@@ -71,15 +111,14 @@ function ProductDetail() {
                             type="number"
                             defaultValue="1"
                             required
+                            onChange={(e) => setAmountToBuy(Number(e.target.value))}
                         />
                         <div className="w-full text-left my-4">
-                            <button
-                                className="flex justify-center items-center gap-2 w-full py-3 px-4 bg-blue-500 text-white text-md font-bold border border-blue-500 rounded-md ease-in-out duration-150 shadow-slate-600 hover:bg-white hover:text-blue-500 lg:m-0 md:px-6"
-                                title="Confirm Order"
-                                onClick={() => addItem({...product, quantity: 1})}
-                            >
-                                <span>Confirmar orden</span>
-                            </button>
+                            
+                                    <Button className="flex justify-center items-center gap-2 w-full py-3 px-4 bg-blue-500 text-white text-md font-bold border border-blue-500 rounded-md ease-in-out duration-150 shadow-slate-600 hover:bg-white hover:text-blue-500 lg:m-0 md:px-6"
+                                        title="Confirm Order"  onClick={() => { setProductToBuy(product.id); onProductModalOpen(); }} >Comprar</Button>
+                                
+                            
                         </div>
                     </div>
                 </div>
@@ -121,6 +160,7 @@ function ProductDetail() {
                 </div>
             </div>
         </div>
+        </>
     );
 }
 
